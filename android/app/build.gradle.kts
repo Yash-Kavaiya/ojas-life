@@ -2,13 +2,15 @@ plugins {
     id("com.android.application")
     id("kotlin-android")
     id("dev.flutter.flutter-gradle-plugin")
-    id("com.google.gms.google-services")
+    // google-services applied only when real credentials are present
+    // Run `flutterfire configure` then uncomment:
+    // id("com.google.gms.google-services")
 }
 
 android {
     namespace = "com.ojashealing.app"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    ndkVersion = "27.2.12479018"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
