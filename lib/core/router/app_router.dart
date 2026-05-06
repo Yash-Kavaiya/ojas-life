@@ -35,7 +35,7 @@ class _RouterNotifier extends ChangeNotifier {
     if (authState.isLoading) return null;
 
     final isLoggedIn = authState.valueOrNull != null;
-    const authRoutes = {Routes.login, Routes.phoneOtp, Routes.otpVerify};
+    const authRoutes = {Routes.login, Routes.phoneOtp};
     final isOnAuthRoute = authRoutes.contains(state.matchedLocation);
 
     if (!isLoggedIn && !isOnAuthRoute) return Routes.login;

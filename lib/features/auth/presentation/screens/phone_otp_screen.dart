@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import '../../../../core/constants/route_constants.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_dimensions.dart';
 import '../../../../core/theme/app_text_styles.dart';
@@ -39,20 +37,17 @@ class _PhoneOtpScreenState extends ConsumerState<PhoneOtpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final authState = ref.watch(phoneAuthProvider);
+    final regState = ref.watch(phoneRegistrationProvider);
 
-    ref.listen<PhoneAuthState>(phoneAuthProvider, (previous, next) {
-      if (next.isCodeSent && !(previous?.isCodeSent ?? false)) {
-        context.push(Routes.otpVerify);
-      }
-      if (next.isError && next.errorMessage != null) {
-        ScaffoldMessenger.of(context).showSnackBar(
+    ref.listen<AsyncValue<void>>(phoneRegistrationProvider, (_, next) {
+      next.whenOrNull(
+        error: (e, _) => ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(next.errorMessage!),
+            content: Text(e.toString().replaceFirst('Exception: ', '')),
             backgroundColor: OjasColors.error,
           ),
-        );
-      }
+        ),
+      );
     });
 
     return Scaffold(
@@ -67,7 +62,6 @@ class _PhoneOtpScreenState extends ConsumerState<PhoneOtpScreen> {
               children: [
                 const SizedBox(height: OjasDimensions.sm),
 
-                // Header
                 const Text(
                   'Tell us about yourself',
                   style: OjasTextStyles.headlineLarge,
@@ -81,7 +75,7 @@ class _PhoneOtpScreenState extends ConsumerState<PhoneOtpScreen> {
                 const SizedBox(height: OjasDimensions.xl),
 
                 // Full Name
-                _FieldLabel(label: 'Full Name'),
+                const _FieldLabel(label: 'Full Name'),
                 const SizedBox(height: OjasDimensions.xs),
                 TextFormField(
                   controller: _nameCtrl,
@@ -103,7 +97,7 @@ class _PhoneOtpScreenState extends ConsumerState<PhoneOtpScreen> {
                 const SizedBox(height: OjasDimensions.lg),
 
                 // Gender
-                _FieldLabel(label: 'Gender'),
+                const _FieldLabel(label: 'Gender'),
                 const SizedBox(height: OjasDimensions.sm),
                 Row(
                   children: _genders.map((g) {
@@ -124,24 +118,25 @@ class _PhoneOtpScreenState extends ConsumerState<PhoneOtpScreen> {
                 ),
                 if (_gender.isEmpty)
                   Padding(
-                    padding: const EdgeInsets.only(top: OjasDimensions.xs, left: OjasDimensions.xs),
+                    padding: const EdgeInsets.only(
+                      top: OjasDimensions.xs,
+                      left: OjasDimensions.xs,
+                    ),
                     child: Text(
                       'Please select a gender',
-                      style: OjasTextStyles.bodySmall.copyWith(
-                        color: OjasColors.error,
-                      ),
+                      style: OjasTextStyles.bodySmall
+                          .copyWith(color: OjasColors.error),
                     ),
                   ),
 
                 const SizedBox(height: OjasDimensions.lg),
 
                 // Phone Number
-                _FieldLabel(label: 'Phone Number'),
+                const _FieldLabel(label: 'Phone Number'),
                 const SizedBox(height: OjasDimensions.xs),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Country code picker
                     Container(
                       height: OjasDimensions.inputHeight,
                       padding: const EdgeInsets.symmetric(
@@ -173,9 +168,7 @@ class _PhoneOtpScreenState extends ConsumerState<PhoneOtpScreen> {
                         ),
                       ),
                     ),
-
                     const SizedBox(width: OjasDimensions.sm),
-
                     Expanded(
                       child: TextFormField(
                         controller: _phoneCtrl,
@@ -203,7 +196,7 @@ class _PhoneOtpScreenState extends ConsumerState<PhoneOtpScreen> {
                 const SizedBox(height: OjasDimensions.lg),
 
                 // City
-                _FieldLabel(label: 'City'),
+                const _FieldLabel(label: 'City'),
                 const SizedBox(height: OjasDimensions.xs),
                 TextFormField(
                   controller: _cityCtrl,
@@ -225,8 +218,8 @@ class _PhoneOtpScreenState extends ConsumerState<PhoneOtpScreen> {
                 const SizedBox(height: OjasDimensions.xxl),
 
                 PrimaryButton(
-                  label: 'Send OTP',
-                  isLoading: authState.isLoading,
+                  label: 'Get Started',
+                  isLoading: regState.isLoading,
                   onPressed: _submit,
                 ),
 
@@ -240,21 +233,18 @@ class _PhoneOtpScreenState extends ConsumerState<PhoneOtpScreen> {
   }
 
   void _submit() {
-    // Validate gender separately since it's not a TextFormField
     final genderMissing = _gender.isEmpty;
     final formValid = _formKey.currentState!.validate();
-
     if (!formValid || genderMissing) return;
 
-    // Persist registration data for use after OTP verification
     ref.read(registrationDataProvider.notifier).state = RegistrationData(
       name: _nameCtrl.text.trim(),
       gender: _gender,
       city: _cityCtrl.text.trim(),
     );
 
-    final fullNumber = '$_countryCode${_phoneCtrl.text.trim()}';
-    ref.read(phoneAuthProvider.notifier).sendOtp(fullNumber);
+    ref.read(phoneRegistrationProvider.notifier).register();
+    // Router listens to Firebase auth state — redirects to home automatically
   }
 }
 
@@ -270,7 +260,9 @@ class _FieldLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       label,
-      style: OjasTextStyles.labelLarge.copyWith(color: OjasColors.textSecondary),
+      style: OjasTextStyles.labelLarge.copyWith(
+        color: OjasColors.textSecondary,
+      ),
     );
   }
 }

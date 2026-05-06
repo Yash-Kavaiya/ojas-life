@@ -9,7 +9,6 @@ import '../../features/profile/presentation/screens/profile_screen.dart';
 import '../../features/auth/presentation/screens/splash_screen.dart';
 import '../../features/auth/presentation/screens/login_screen.dart';
 import '../../features/auth/presentation/screens/phone_otp_screen.dart';
-import '../../features/auth/presentation/screens/otp_verify_screen.dart';
 
 List<RouteBase> get appRoutes => [
       // Splash — always accessible, handles its own auth-driven navigation
@@ -26,10 +25,6 @@ List<RouteBase> get appRoutes => [
       GoRoute(
         path: Routes.phoneOtp,
         builder: (_, __) => const PhoneOtpScreen(),
-      ),
-      GoRoute(
-        path: Routes.otpVerify,
-        builder: (_, __) => const OtpVerifyScreen(),
       ),
 
       // Shell — bottom navigation with 5 persistent branches

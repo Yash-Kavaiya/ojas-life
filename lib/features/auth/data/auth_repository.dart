@@ -36,41 +36,10 @@ class AuthRepository {
     return _toAppUser(result.user!);
   }
 
-  /// Sends an SMS OTP to [phoneNumber] (e.g. "+919876543210").
-  /// Calls [onCodeSent] with the verificationId on success, or
-  /// [onError] with a human-readable message on failure.
-  Future<void> sendPhoneOtp({
-    required String phoneNumber,
-    required void Function(String verificationId) onCodeSent,
-    required void Function(String message) onError,
-  }) async {
-    await _auth.verifyPhoneNumber(
-      phoneNumber: phoneNumber,
-      timeout: const Duration(seconds: 60),
-      verificationCompleted: (credential) async {
-        // Android automatic SMS retrieval
-        try {
-          await _auth.signInWithCredential(credential);
-        } catch (_) {}
-      },
-      verificationFailed: (e) {
-        onError(e.message ?? 'Verification failed. Check the number and try again.');
-      },
-      codeSent: (verificationId, _) => onCodeSent(verificationId),
-      codeAutoRetrievalTimeout: (_) {},
-    );
-  }
-
-  /// Verifies [smsCode] against the previously obtained [verificationId].
-  Future<AppUser> verifyOtp({
-    required String verificationId,
-    required String smsCode,
-  }) async {
-    final credential = PhoneAuthProvider.credential(
-      verificationId: verificationId,
-      smsCode: smsCode,
-    );
-    final result = await _auth.signInWithCredential(credential);
+  /// Signs in anonymously — used after the phone registration form
+  /// so the router's auth guard is satisfied without OTP.
+  Future<AppUser> signInAnonymously() async {
+    final result = await _auth.signInAnonymously();
     return _toAppUser(result.user!);
   }
 

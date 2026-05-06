@@ -85,92 +85,28 @@ final registrationDataProvider =
     StateProvider<RegistrationData>((ref) => const RegistrationData());
 
 // ---------------------------------------------------------------------------
-// Phone / OTP auth
+// Phone registration (no OTP — signs in anonymously after form submit)
 // ---------------------------------------------------------------------------
 
-enum PhoneAuthStatus { idle, loading, codeSent, verifying, error }
-
-class PhoneAuthState {
-  const PhoneAuthState({
-    this.status = PhoneAuthStatus.idle,
-    this.phoneNumber,
-    this.verificationId,
-    this.errorMessage,
-  });
-
-  final PhoneAuthStatus status;
-  final String? phoneNumber;
-  final String? verificationId;
-  final String? errorMessage;
-
-  bool get isLoading =>
-      status == PhoneAuthStatus.loading || status == PhoneAuthStatus.verifying;
-  bool get isCodeSent => status == PhoneAuthStatus.codeSent;
-  bool get isError => status == PhoneAuthStatus.error;
-
-  PhoneAuthState copyWith({
-    PhoneAuthStatus? status,
-    String? phoneNumber,
-    String? verificationId,
-    String? errorMessage,
-  }) =>
-      PhoneAuthState(
-        status: status ?? this.status,
-        phoneNumber: phoneNumber ?? this.phoneNumber,
-        verificationId: verificationId ?? this.verificationId,
-        errorMessage: errorMessage ?? this.errorMessage,
-      );
-}
-
-class PhoneAuthNotifier extends StateNotifier<PhoneAuthState> {
-  PhoneAuthNotifier(this._repo) : super(const PhoneAuthState());
+class PhoneRegistrationNotifier
+    extends StateNotifier<AsyncValue<void>> {
+  PhoneRegistrationNotifier(this._repo) : super(const AsyncValue.data(null));
 
   final AuthRepository _repo;
 
-  Future<void> sendOtp(String phoneNumber) async {
-    state = PhoneAuthState(
-      status: PhoneAuthStatus.loading,
-      phoneNumber: phoneNumber,
-    );
-
-    await _repo.sendPhoneOtp(
-      phoneNumber: phoneNumber,
-      onCodeSent: (id) {
-        state = state.copyWith(
-          status: PhoneAuthStatus.codeSent,
-          verificationId: id,
-        );
-      },
-      onError: (msg) {
-        state = state.copyWith(
-          status: PhoneAuthStatus.error,
-          errorMessage: msg,
-        );
-      },
-    );
-  }
-
-  Future<void> verifyOtp(String smsCode) async {
-    if (state.verificationId == null) return;
-    state = state.copyWith(status: PhoneAuthStatus.verifying, errorMessage: null);
+  Future<void> register() async {
+    state = const AsyncValue.loading();
     try {
-      await _repo.verifyOtp(
-        verificationId: state.verificationId!,
-        smsCode: smsCode,
-      );
-      // Success: Firebase auth state changes → router redirect handles navigation
-    } catch (e) {
-      state = state.copyWith(
-        status: PhoneAuthStatus.error,
-        errorMessage: e.toString().replaceFirst('Exception: ', ''),
-      );
+      await _repo.signInAnonymously();
+      state = const AsyncValue.data(null);
+      // Router detects auth state change and redirects to home automatically
+    } catch (e, st) {
+      state = AsyncValue.error(e, st);
     }
   }
-
-  void reset() => state = const PhoneAuthState();
 }
 
-final phoneAuthProvider =
-    StateNotifierProvider.autoDispose<PhoneAuthNotifier, PhoneAuthState>(
-  (ref) => PhoneAuthNotifier(ref.watch(authRepositoryProvider)),
+final phoneRegistrationProvider = StateNotifierProvider.autoDispose<
+    PhoneRegistrationNotifier, AsyncValue<void>>(
+  (ref) => PhoneRegistrationNotifier(ref.watch(authRepositoryProvider)),
 );
