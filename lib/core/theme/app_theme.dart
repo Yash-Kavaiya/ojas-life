@@ -18,6 +18,10 @@ abstract final class OjasTheme {
         surface: OjasColors.surfacePurple,
         onSurface: OjasColors.textPrimary,
         error: OjasColors.error,
+        primaryContainer: OjasColors.saffronDark,
+        onPrimaryContainer: OjasColors.goldLight,
+        secondaryContainer: OjasColors.cardPurple,
+        onSecondaryContainer: OjasColors.textPrimary,
       ),
       scaffoldBackgroundColor: OjasColors.deepPurple,
       appBarTheme: const AppBarTheme(
