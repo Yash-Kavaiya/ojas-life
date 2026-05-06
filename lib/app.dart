@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
 import 'core/providers/locale_provider.dart';
+import 'l10n/app_localizations.dart';
 
 class OjasApp extends ConsumerWidget {
   const OjasApp({super.key});
@@ -20,10 +21,10 @@ class OjasApp extends ConsumerWidget {
       locale: locale,
       supportedLocales: const [Locale('en'), Locale('hi')],
       localizationsDelegates: const [
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
-        // AppLocalizations.delegate — added in Step 21 after `flutter gen-l10n`
       ],
       routerConfig: router,
     );
