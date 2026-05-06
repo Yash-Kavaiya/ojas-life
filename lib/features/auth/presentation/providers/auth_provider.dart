@@ -59,6 +59,32 @@ final googleSignInProvider =
 );
 
 // ---------------------------------------------------------------------------
+// Registration data (collected before OTP verification)
+// ---------------------------------------------------------------------------
+
+class RegistrationData {
+  const RegistrationData({
+    this.name = '',
+    this.gender = '',
+    this.city = '',
+  });
+
+  final String name;
+  final String gender;
+  final String city;
+
+  RegistrationData copyWith({String? name, String? gender, String? city}) =>
+      RegistrationData(
+        name: name ?? this.name,
+        gender: gender ?? this.gender,
+        city: city ?? this.city,
+      );
+}
+
+final registrationDataProvider =
+    StateProvider<RegistrationData>((ref) => const RegistrationData());
+
+// ---------------------------------------------------------------------------
 // Phone / OTP auth
 // ---------------------------------------------------------------------------
 
