@@ -1,0 +1,68 @@
+{
+  "@@locale": "en",
+  "appName": "Ojas Healing",
+  "@appName": { "description": "The application name" },
+
+  "home": "Home",
+  "learn": "Learn",
+  "live": "Live",
+  "heal": "Heal",
+  "profile": "Profile",
+
+  "loading": "Loading...",
+  "error": "Something went wrong",
+  "retry": "Retry",
+  "cancel": "Cancel",
+  "confirm": "Confirm",
+  "save": "Save",
+
+  "signIn": "Sign In",
+  "signOut": "Sign Out",
+  "continueWithGoogle": "Continue with Google",
+  "continueWithPhone": "Continue with Phone",
+
+  "welcome": "Welcome to Ojas Healing",
+  "welcomeSubtitle": "Your spiritual wellness companion",
+
+  "courses": "Courses",
+  "meditate": "Meditate",
+  "liveSessions": "Live Sessions",
+  "healingServices": "Healing Services",
+  "journal": "Journal",
+  "streak": "{days} day streak",
+  "@streak": {
+    "placeholders": {
+      "days": { "type": "int" }
+    }
+  },
+
+  "hypnotherapy": "Hypnotherapy",
+  "pastLifeRegression": "Past Life Regression",
+  "spiritReleaseTherapy": "Spirit Release Therapy",
+  "spiritualCounseling": "Spiritual Counseling",
+
+  "bookSession": "Book Session",
+  "upcomingSessions": "Upcoming Sessions",
+  "myBookings": "My Bookings",
+
+  "premiumRequired": "Premium Required",
+  "upgradeToPremium": "Upgrade to Premium",
+  "monthlyPlan": "Monthly Plan",
+  "yearlyPlan": "Yearly Plan",
+
+  "askOjas": "Ask Ojas",
+  "voiceInput": "Voice Input",
+  "typeMessage": "Type a message...",
+
+  "foodDiary": "Food Diary",
+  "meditationTracker": "Meditation Tracker",
+  "manifestationJournal": "Manifestation Journal",
+  "weeklyReport": "Weekly Report",
+
+  "language": "Language",
+  "hindi": "Hindi",
+  "english": "English",
+  "notifications": "Notifications",
+  "privacyPolicy": "Privacy Policy",
+  "termsOfService": "Terms of Service"
+}

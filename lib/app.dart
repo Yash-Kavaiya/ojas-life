@@ -1,0 +1,31 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'core/router/app_router.dart';
+import 'core/theme/app_theme.dart';
+import 'core/providers/locale_provider.dart';
+
+class OjasApp extends ConsumerWidget {
+  const OjasApp({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final locale = ref.watch(localeProvider);
+    final router = ref.watch(goRouterProvider);
+
+    return MaterialApp.router(
+      title: 'Ojas Healing',
+      debugShowCheckedModeBanner: false,
+      theme: OjasTheme.dark,
+      locale: locale,
+      supportedLocales: const [Locale('en'), Locale('hi')],
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        // AppLocalizations.delegate — added in Step 21 after `flutter gen-l10n`
+      ],
+      routerConfig: router,
+    );
+  }
+}

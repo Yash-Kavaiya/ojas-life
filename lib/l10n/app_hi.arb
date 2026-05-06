@@ -1,0 +1,62 @@
+{
+  "@@locale": "hi",
+  "appName": "ओजस हीलिंग",
+
+  "home": "होम",
+  "learn": "सीखें",
+  "live": "लाइव",
+  "heal": "उपचार",
+  "profile": "प्रोफ़ाइल",
+
+  "loading": "लोड हो रहा है...",
+  "error": "कुछ गलत हो गया",
+  "retry": "पुनः प्रयास करें",
+  "cancel": "रद्द करें",
+  "confirm": "पुष्टि करें",
+  "save": "सहेजें",
+
+  "signIn": "साइन इन करें",
+  "signOut": "साइन आउट करें",
+  "continueWithGoogle": "Google से जारी रखें",
+  "continueWithPhone": "फ़ोन से जारी रखें",
+
+  "welcome": "ओजस हीलिंग में आपका स्वागत है",
+  "welcomeSubtitle": "आपका आध्यात्मिक कल्याण सहयोगी",
+
+  "courses": "पाठ्यक्रम",
+  "meditate": "ध्यान करें",
+  "liveSessions": "लाइव सत्र",
+  "healingServices": "उपचार सेवाएं",
+  "journal": "डायरी",
+  "streak": "{days} दिन की स्ट्रीक",
+
+  "hypnotherapy": "हिप्नोथेरेपी",
+  "pastLifeRegression": "पिछले जन्म प्रतिगमन",
+  "spiritReleaseTherapy": "आत्मा मुक्ति चिकित्सा",
+  "spiritualCounseling": "आध्यात्मिक परामर्श",
+
+  "bookSession": "सत्र बुक करें",
+  "upcomingSessions": "आगामी सत्र",
+  "myBookings": "मेरी बुकिंग",
+
+  "premiumRequired": "प्रीमियम आवश्यक है",
+  "upgradeToPremium": "प्रीमियम में अपग्रेड करें",
+  "monthlyPlan": "मासिक योजना",
+  "yearlyPlan": "वार्षिक योजना",
+
+  "askOjas": "ओजस से पूछें",
+  "voiceInput": "वॉइस इनपुट",
+  "typeMessage": "संदेश टाइप करें...",
+
+  "foodDiary": "खाने की डायरी",
+  "meditationTracker": "ध्यान ट्रैकर",
+  "manifestationJournal": "अभिव्यक्ति डायरी",
+  "weeklyReport": "साप्ताहिक रिपोर्ट",
+
+  "language": "भाषा",
+  "hindi": "हिंदी",
+  "english": "अंग्रेज़ी",
+  "notifications": "सूचनाएं",
+  "privacyPolicy": "गोपनीयता नीति",
+  "termsOfService": "सेवा की शर्तें"
+}
