@@ -1,23 +1,21 @@
 {
   "project_info": {
-    "project_number": "000000000000",
-    "firebase_url": "https://ojas-healing-prod-default-rtdb.firebaseio.com",
-    "project_id": "ojas-healing-prod",
-    "storage_bucket": "ojas-healing-prod.firebasestorage.app"
+    "project_number": "381861530396",
+    "project_id": "ojas-life-moblie-app",
+    "storage_bucket": "ojas-life-moblie-app.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:000000000000:android:0000000000000000",
-        "android_info": {
-          "package_name": "com.ojashealing.app",
-          "certificate_hash": []
+        "mobilesdk_app_id": "1:381861530396:android:6935ec5190ebfff26948d9",
+        "android_client_info": {
+          "package_name": "com.ojashealing.app"
         }
       },
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "REPLACE_ME"
+          "current_key": "AIzaSyCdadFzJTmhe_czkk4IIFHfueYahIKRYeo"
         }
       ],
       "services": {
